@@ -1,0 +1,30 @@
+version: '3.9'
+
+networks:
+  web:
+    external: true
+    driver:  bridge
+
+services:
+  db:
+    image: postgres:17.4
+    container_name: db
+    environment:
+      POSTGRES_DB: "PolyMobileApplication"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "admin"
+    ports:
+      - "5432:5432"
+
+  mobile-up-server:
+    image: meelesh/poly-mobile-app-server
+    build:
+      context: .
+      dockerfile: DockerfilePolyMobileApp
+    ports:
+      - '8081:8081'
+    depends_on:
+      - db
+    environment:
+      DB_URL: jdbc:postgresql://db:5432/PolyMobileApplication
+      restart: unless-stopped

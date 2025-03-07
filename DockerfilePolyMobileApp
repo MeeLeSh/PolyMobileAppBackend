@@ -1,0 +1,7 @@
+FROM openjdk:17
+
+ADD target/poly-mobile-app-backend-1.0.jar poly-mobile-app-backend-1.0.jar
+
+EXPOSE 8081
+
+ENTRYPOINT ["java", "-jar", "poly-mobile-app-backend-1.0.jar"]
